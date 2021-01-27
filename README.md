@@ -17,6 +17,10 @@ npm i
 npm run start
 ```
 
+##### Test credentials
+login: test\
+password: test
+
 ### Compiles and minifies for production
 ```
 npm run build
