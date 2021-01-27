@@ -62,7 +62,7 @@ const fetchNotes = async (login) => {
   return await result
 }
 
-const addNote = async (login, text) => {
+const addNote = async (login, title, text) => {
   const client = initClient()
   let result = {}
   try {
@@ -73,6 +73,7 @@ const addNote = async (login, text) => {
         $addToSet: {
           notes: {
             checked: false,
+            title: title,
             text: text,
             created: Date.now()
           }

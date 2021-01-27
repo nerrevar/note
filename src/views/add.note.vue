@@ -3,6 +3,8 @@
     <router-link :to="{ name: 'Main' }">&#x2190; Back</router-link>
     <div class="centeredItems">
       <div class="innerWrapper">
+        <label for="title">Note title:</label>
+        <input type="title" name="title" id="title" />
         <label for="text">Note text:</label>
         <input type="text" name="text" id="text" />
         <button
@@ -31,11 +33,24 @@ export default {
   },
   methods: {
     add () {
+      const title = document.getElementById('title').value.trim()
+      const text = document.getElementById('text').value.trim()
+
+      if (!title) {
+        alert('Title can\'t be empty')
+        return
+      }
+      if (!text) {
+        alert('Text can\'t be empty')
+        return
+      }
+
       this.$fetch(
         'add_note',
         {
           login: this.$cookie.get('login'),
-          text: document.getElementById('text').value.trim(),
+          title: title,
+          text: text,
         }
       ).then(
         response => response.json()

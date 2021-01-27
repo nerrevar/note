@@ -25,5 +25,5 @@ export default {
   flex-direction: column
 
 .textRed
-  font-color: red
+  color: red
 </style>

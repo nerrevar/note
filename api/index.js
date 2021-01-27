@@ -14,12 +14,12 @@ app.post('/login', async (req, res) => {
   const result = await dbFunctions.signIn(req.body.login, req.body.password)
   if (result.status) {
     res.cookie('login', req.body.login, { sameSite: true })
-    res.cookie('name', req.body.name, { sameSite: true })
+    res.cookie('name', result.user.name, { sameSite: true })
   }
   if (result.status)
     res.send({
       status: true,
-      notes: result.notes,
+      notes: result.user.notes,
     })
   else
     res.send(result)
@@ -31,7 +31,7 @@ app.post('/note_list', async (req, res) => {
 })
 
 app.post('/add_note', async (req, res) => {
-  const result = await dbFunctions.addNote(req.body.login, req.body.text)
+  const result = await dbFunctions.addNote(req.body.login, req.body.title, req.body.text)
   res.send(result)
 })
 

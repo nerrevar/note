@@ -23,7 +23,10 @@
           :checked="note.checked"
         >
         <div class="time">{{ note.created.toLocaleString('UTC') }} UTC</div>
-        <div class="text">{{ note.text }}</div>
+        <div class="wrapper">
+          <div class="title">{{ note.title }}</div>
+          <div class="text">{{ note.text }}</div>
+        </div>
         <div class="timeElapsed">{{ note.timeElapsed }}</div>
       </div>
       <button
@@ -68,6 +71,10 @@ export default {
           else
             this.network = false
         }
+      ).catch(
+        e => {
+          this.network = false
+        }
       )
     },
     timeElapsed (created) {
@@ -95,25 +102,20 @@ export default {
       return this.timeElapsedString(timeElapsedObj)
     },
     timeElapsedString (time) {
-      let str = ''
-      if (time.Y)
-        str += ' ' + time.Y + ' year(s)'
-      if (time.M)
-        str += ' ' + time.M + ' month(s)'
-      if (time.D)
-        str += ' ' + time.D + ' day(s)'
-      if (!time.Y && !time.M && time.h)
-        str += ' ' + time.h + ' hour(s)'
-      if (!time.Y && !time.M && !time.D) {
-        if (time.m)
-          str += ' ' + time.m + ' minute(s)'
-        if (!time.h && time.s)
-          str += ' ' + time.s + ' second(s)'
-      }
-      str += 'ago'
       if (!time.Y && !time.M && !time.D && !time.h && !time.m && !time.s)
-        str = 'Just now'
-      return str.trim()
+        return 'Just now'
+      if (time.Y)
+        return time.Y + ' year(s) ago'
+      if (time.M)
+        return time.M + ' month(s) ago'
+      if (time.D)
+        return time.D + ' day(s) ago'
+      if (time.h)
+        return time.h + ' hour(s) ago'
+      if (time.m)
+        return time.m + ' minute(s) ago'
+      if (time.s)
+        return time.s + ' second(s) ago'
     },
   },
   created () {
@@ -165,6 +167,11 @@ export default {
   white-space: nowrap
   font-size: 0.7em
   color: grey
+  flex: 0
+
+.title
+  white-space: nowrap
+  font-size: 1.3em
 
 button
   background: #13aa13
