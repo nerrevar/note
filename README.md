@@ -17,6 +17,11 @@ npm i
 npm run start
 ```
 
+Result available on:
+```
+127.0.0.1:3000
+```
+
 ##### Test credentials
 login: test\
 password: test
